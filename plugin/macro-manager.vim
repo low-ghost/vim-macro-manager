@@ -44,7 +44,6 @@ function! ListMacrosSink(lines)
 
   let path = g:MacroManagerDir.'/'.ft
   let file = path.'/'.final_name
-  "call input('ft: '.ft.' path: '.path.' item: '.item)
 
   if key == 'ctrl-h'
     call input("\nMacro Manager Help".
@@ -72,8 +71,9 @@ function! ListMacrosSink(lines)
     call writefile(split(fileContent, "\n"), newPath)
     exe "e ".newPath
     return
-  else key == 'ctrl-u'
+  elseif key == 'ctrl-u'
     return s:macro_directory()
+  endif
 
   let register = input('Register> ')
   if len(register) > 1
@@ -147,7 +147,6 @@ endfunction
 function! s:load_macro(file, name, ...)
   let ft = exists('a:1') ? a:1 : &ft
   let file_path = g:MacroManagerDir.'/'.ft.'/'.a:file
-  call input('file_path: '.file_path)
   if fnamemodify(a:file, ':e') == 'vim'
     exe "source ".file_path
     let function_name = 'Macro_'.fnamemodify(a:file, ':r')
